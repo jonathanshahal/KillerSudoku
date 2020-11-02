@@ -6,19 +6,16 @@ using System.Threading.Tasks;
 
 namespace KillerSoduko
 {
-    class Group
+    public class Group
     {
-        //public int size;
-        //public int sumOfGroup;
-        //public String backColor;
+        private int sumOfGroup;
+        private String backColor;
 
-        public Group (int size1, int sum1, String color1)
-            {
-            int size = size1;
-            int sumOfGroup = sum1;
-            String backColor = color1;
-            }
-
+        public Group(int sum, String color)
+        {
+            this.sumOfGroup = sum;
+            this.backColor = color;
+        }
     }
 }
 
