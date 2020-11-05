@@ -15,9 +15,9 @@ namespace KillerSoduko
 
         public Board ()
         {
-            this.groups = new Group[81];
+           this.groups = null;//new Group[81];
             
-           // Create 2-dim array of cells, each has row' col and square.
+           // Create 2-dim array of cells, each has row, col and square.
            this.cells = new Cell[9,9];
            for (int row = 0; row < 9; row++)
             {
@@ -28,12 +28,17 @@ namespace KillerSoduko
             }
         }
 
-        public bool LoadGame(String filename)
+      //function that recieves a name of a csv file and puts the data of groups in the array of groups and the data of cells in the array of cells
+          public bool LoadGame(String filename)
         {
             // load the logic of the constrains from a csv file
-            bool inCells = true;
-            bool inGroups = false;
-
+            bool inCells = false;
+            bool inGroups = true;
+            
+            /*if (!File.Exists(filename))
+            {   
+                MessageBox.Show(filename + " Does not exists.\nQuitting.");
+            }*/
             using(var reader = new StreamReader(filename))
             {
                 while (!reader.EndOfStream)
@@ -43,10 +48,10 @@ namespace KillerSoduko
                     if (line.StartsWith("#"))
                     {
                         // Handle comments (lines starting with #), if "Group" is found, switch to read groups.
-                        if (line.IndexOf("Group", 0) != -1)
+                        if (line.IndexOf("Cells", 0) != -1) 
                         {
-                            inCells = false;
-                            inGroups = true;
+                            inCells = true;
+                            inGroups = false;
                         }
                     }
                     else
@@ -59,14 +64,26 @@ namespace KillerSoduko
                             int row = int.Parse(values[0]);
                             int col = int.Parse(values[1]);
                             int int_group = int.Parse(values[2]);
-
                             Group group = this.groups[int_group];
+
+                            // cell contains its group
                             this.cells[row, col].setGroup(group);
+
+                            group.addCell(this.cells[row, col]);
                         }
 
                         if (inGroups)
                         {
                             // Handle groups
+                            int groupIndex = int.Parse(values[0]);
+                            String backColor = values[1];
+                            int groupSum = int.Parse(values[2]);
+                            if (this.groups == null)
+                            {
+                                this.groups = new Group [groupIndex + 1];
+                            }
+                            this.groups[groupIndex] = new Group(groupSum, backColor, groupIndex);
+                            
                         }
                     }
 

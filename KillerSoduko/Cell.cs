@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Text.RegularExpressions;
 
 
@@ -22,6 +23,11 @@ namespace KillerSoduko
 		public void setGroup(Group grp)
         {
 			this.group = grp;
+        }
+
+		public Group getGroup ()
+        {
+			return this.group;
         }
 	}
 }

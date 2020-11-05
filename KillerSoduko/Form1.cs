@@ -21,7 +21,8 @@ namespace KillerSoduko
             InitializeComponent();
             //create board
             this.gameboard = new Board();
-            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Gam1.csv");
+        
+            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,6 +43,7 @@ namespace KillerSoduko
                     int x = startPos + (40 * col + gap * (col / 3));
                     int y = startPos + (40 * row) + gap * (row / 3);
                     btn.Location = new Point(x, y);
+                    btn.BackColor = this.gameboard.cells[row ,col].getGroup().getbackColor();
                     this.Controls.Add(btn);
                     cnt++;
                 }
