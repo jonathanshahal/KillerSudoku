@@ -14,17 +14,7 @@ namespace KillerSoduko
         private Color backColor;
         private int groupIndex;
         private ArrayList alCells;
-
-        public void addCell (Cell c)
-        {
-            this.alCells.Add (c);
-        }
-
-        public Color getbackColor ()
-        {
-            return this.backColor;
-        }
-        
+        private Cell cellSum; //the cell in the group that showes the sum
         
         public Group(int sum, String color, int index)
         {
@@ -32,6 +22,44 @@ namespace KillerSoduko
             this.backColor = Color.FromName(color);   
             this.groupIndex = index;
             this.alCells = new ArrayList();
+            this.cellSum = null;
+        }
+
+
+
+        public void addCell (Cell c)
+        {
+            this.alCells.Add (c);
+
+            if (
+                // first cell
+                (this.cellSum == null) || 
+
+                // new cell is on line above current cell sum
+                (c.getRow() < this.cellSum.getRow()) || 
+
+               // new cell is on the left of the current ell sum
+               ((c.getRow() == this.cellSum.getRow()) && (c.getCol() < this.cellSum.getCol()))
+               )
+
+               {
+                    this.cellSum = c;
+               }
+        }
+
+        public Color getbackColor ()
+        {
+            return this.backColor;
+        }
+        
+        public int getgroupSum ()
+        {
+            return this.groupSum;
+        }
+        
+        public Cell getcellSum ()
+        {
+            return this.cellSum;
         }
     }
 }

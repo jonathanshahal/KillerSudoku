@@ -43,7 +43,16 @@ namespace KillerSoduko
                     int x = startPos + (40 * col + gap * (col / 3));
                     int y = startPos + (40 * row) + gap * (row / 3);
                     btn.Location = new Point(x, y);
-                    btn.BackColor = this.gameboard.cells[row ,col].getGroup().getbackColor();
+                    btn.BackColor = this.gameboard.cells[row,col].getGroup().getbackColor();
+
+                    if (this.gameboard.cells[row,col].getGroup().getcellSum() == this.gameboard.cells[row,col])
+                    {
+                        int newSize = 6;
+                        btn.Font = new Font(btn.Font.FontFamily, newSize);
+                        btn.Text = this.gameboard.cells[row,col].getGroup().getgroupSum().ToString();
+
+                        btn.TextAlign = ContentAlignment.TopLeft;
+                    }
                     this.Controls.Add(btn);
                     cnt++;
                 }

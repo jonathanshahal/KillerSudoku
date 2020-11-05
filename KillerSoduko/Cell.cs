@@ -29,5 +29,15 @@ namespace KillerSoduko
         {
 			return this.group;
         }
+
+		public int getRow()
+		{
+			return this.row;
+		}
+
+		public int getCol()
+		{
+			return this.col;
+		}
 	}
 }

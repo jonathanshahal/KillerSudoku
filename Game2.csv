@@ -1,32 +1,32 @@
 ﻿# Groups (index,color,sum) - BEGIN
-28,Blue,17
+28,LightBlue,17
 27,Yellow,13
 26,Pink,15
 25,Pink,16
-24,Green,8
-23,Green,14
-22,Green,10
-21,Blue,6
+24,LightGreen,8
+23,LightGreen,14
+22,LightGreen,10
+21,LightBlue,6
 20,Yellow,20
 19,Yellow,6
-18,Blue,27
+18,LightBlue,27
 17,Yellow,12
-16,Blue,20
-15,Green,13
+16,LightBlue,20
+15,LightGreen,13
 14,Pink,17
 13,Pink,17
 12,Pink,14
 11,Yellow,6
-10,Blue,20
-9,Green,8
+10,LightBlue,20
+9,LightGreen,8
 8,Yellow,9
 7,Pink,17
-6,Blue,25
-5,Green,15
+6,LightBlue,25
+5,LightGreen,15
 4,Yellow,16
-3,Green,4
-2,Blue,22
-1,Green,15
+3,LightGreen,4
+2,LightBlue,22
+1,LightGreen,15
 0,Yellow,3
 # Groups - END
 # Cells (x,y,qroup) -BEGIN 
