@@ -57,6 +57,18 @@ namespace KillerSoduko
                     cnt++;
                 }
             }
+
+                    var label = new Label();
+                    label.Text = "";
+                    label.BorderStyle = BorderStyle.Fixed3D;
+                    label.AutoSize = false;
+                    label.Height = 2;
+                    label.Location = new System.Drawing.Point(80,80);
+                    label.BackColor = Color.Black;
+
+                    this.Controls.Add(label);
+
+
         }
 
         
@@ -64,8 +76,6 @@ namespace KillerSoduko
         {
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
+        
      }
 }
