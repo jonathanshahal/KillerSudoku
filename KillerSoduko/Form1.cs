@@ -23,6 +23,59 @@ namespace KillerSoduko
             this.gameboard = new Board();
         
             this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv");
+
+            horizontalLine1.BackColor = Color.Black;
+            horizontalLine1.AutoSize = false;
+            horizontalLine1.Size = new Size(362, 2);
+            horizontalLine1.Text = "";
+            horizontalLine1.Location = new Point(31, 29);
+
+            
+            horizontalLine2.BackColor = Color.Black;
+            horizontalLine2.AutoSize = false;
+            horizontalLine2.Size = new Size(362, 2);
+            horizontalLine2.Text = "";
+            horizontalLine2.Location = new Point(31, 150);
+
+
+            horizontalLine3.BackColor = Color.Black;
+            horizontalLine3.AutoSize = false;
+            horizontalLine3.Size = new Size(362, 2);
+            horizontalLine3.Text = "";
+            horizontalLine3.Location = new Point(31, 272);
+
+
+            horizontalLine4.BackColor = Color.Black;
+            horizontalLine4.AutoSize = false;
+            horizontalLine4.Size = new Size(362, 2);
+            horizontalLine4.Text = "";
+            horizontalLine4.Location = new Point(31, 393);
+
+
+            verticalLine1.BackColor = Color.Black;
+            verticalLine1.AutoSize = false;
+            verticalLine1.Size = new Size(2, 362);
+            verticalLine1.Text = "";
+            verticalLine1.Location = new Point(31, 31);
+
+            verticalLine2.BackColor = Color.Black;
+            verticalLine2.AutoSize = false;
+            verticalLine2.Size = new Size(2, 362);
+            verticalLine2.Text = "";
+            verticalLine2.Location = new Point(150, 31);
+
+            
+            verticalLine3.BackColor = Color.Black;
+            verticalLine3.AutoSize = false;
+            verticalLine3.Size = new Size(2, 362);
+            verticalLine3.Text = "";
+            verticalLine3.Location = new Point(272, 31);
+
+            verticalLine4.BackColor = Color.Black;
+            verticalLine4.AutoSize = false;
+            verticalLine4.Size = new Size(2, 362);
+            verticalLine4.Text = "";
+            verticalLine4.Location = new Point(393, 31);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,7 +83,7 @@ namespace KillerSoduko
             int cnt = 0;
             int startPos = 30;
             int gap = 2;
-
+            
             for (int row = 0; row < 9; row++)
             {
                 for (int col = 0; col < 9; col++)
@@ -57,18 +110,7 @@ namespace KillerSoduko
                     cnt++;
                 }
             }
-
-                    var label = new Label();
-                    label.Text = "";
-                    label.BorderStyle = BorderStyle.Fixed3D;
-                    label.AutoSize = false;
-                    label.Height = 2;
-                    label.Location = new System.Drawing.Point(80,80);
-                    label.BackColor = Color.Black;
-
-                    this.Controls.Add(label);
-
-
+            
         }
 
         

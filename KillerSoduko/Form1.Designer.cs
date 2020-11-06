@@ -31,7 +31,14 @@ namespace KillerSoduko
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.horizontalLine1 = new System.Windows.Forms.Label();
+            this.horizontalLine2 = new System.Windows.Forms.Label();
+            this.horizontalLine3 = new System.Windows.Forms.Label();
+            this.horizontalLine4 = new System.Windows.Forms.Label();
+            this.verticalLine1 = new System.Windows.Forms.Label();
+            this.verticalLine2 = new System.Windows.Forms.Label();
+            this.verticalLine3 = new System.Windows.Forms.Label();
+            this.verticalLine4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Solution
@@ -50,20 +57,34 @@ namespace KillerSoduko
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1146, 1050);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
+            this.Controls.Add(this.horizontalLine1);
+            this.Controls.Add(this.horizontalLine2);
+            this.Controls.Add(this.horizontalLine3);
+            this.Controls.Add(this.horizontalLine4);
+            this.Controls.Add(this.verticalLine1);
+            this.Controls.Add(this.verticalLine2);
+            this.Controls.Add(this.verticalLine3);
+            this.Controls.Add(this.verticalLine4);
         }
 
 
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label horizontalLine1;
+        private System.Windows.Forms.Label horizontalLine2;
+        private System.Windows.Forms.Label horizontalLine3;
+        private System.Windows.Forms.Label horizontalLine4;
+        private System.Windows.Forms.Label verticalLine1;
+        private System.Windows.Forms.Label verticalLine2;
+        private System.Windows.Forms.Label verticalLine3;
+        private System.Windows.Forms.Label verticalLine4;
     }
 }
 
