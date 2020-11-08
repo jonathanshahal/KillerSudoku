@@ -11,6 +11,7 @@ namespace KillerSoduko
 		private int col;
 		private int square;
 		private Group group;
+		private int value;
 
 		public Cell(int row, int col)
 		{
@@ -18,6 +19,7 @@ namespace KillerSoduko
 			this.col = col;
 			this.square = 3 * (int)(row / 3) + (int)(col / 3);
 			this.group = null;
+			this.value = 0;
 		}
 
 		public void setGroup(Group grp)
@@ -39,5 +41,16 @@ namespace KillerSoduko
 		{
 			return this.col;
 		}
+
+		public int getValue()
+		{
+			return this.value;
+		}
+
+		public void setValue(int a)
+        {
+			this.value = a;
+        }
+
 	}
 }

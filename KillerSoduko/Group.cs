@@ -25,7 +25,10 @@ namespace KillerSoduko
             this.cellSum = null;
         }
 
-
+        public ArrayList getcellList()
+        {
+            return this.alCells;
+        }
 
         public void addCell (Cell c)
         {
