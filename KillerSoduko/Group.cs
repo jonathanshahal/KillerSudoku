@@ -14,7 +14,7 @@ namespace KillerSoduko
         private Color backColor;
         private int groupIndex;
         private ArrayList alCells;
-        private Cell cellSum; //the cell in the group that showes the sum
+        private Cell cellSum; //the cell in the group that shows the sum
         
         public Group(int sum, String color, int index)
         {

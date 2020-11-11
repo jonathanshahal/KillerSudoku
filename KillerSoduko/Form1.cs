@@ -21,7 +21,7 @@ namespace KillerSoduko
            InitializeComponent();
            this.gameboard = new Board();
         
-            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv");
+            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game3.csv");
 
             horizontalLine1.BackColor = Color.Black;
             horizontalLine1.Size = new Size(362, 2);
@@ -94,23 +94,7 @@ namespace KillerSoduko
         
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.gameboard.solveBoard())
-            {
-                 for (int row = 0; row < 9; row++)
-                 {
-                    for (int col = 0; col < 9; col++)
-                    {
-                        buttonArray[row,col].Text =  this.gameboard.cells[row,col].getValue().ToString();
-                        int newSize = 10;
-                        buttonArray[row,col].Font = new Font(buttonArray[row,col].Font.FontFamily, newSize);
-                        buttonArray[row,col].TextAlign = ContentAlignment.MiddleCenter;
-                    }
-                 }  
-            }
-            else
-            {
-                MessageBox.Show("Not Solvable");
-            }
+           
                
     }
         }
