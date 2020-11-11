@@ -21,7 +21,7 @@ namespace KillerSoduko
            InitializeComponent();
            this.gameboard = new Board();
         
-            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv");
+            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game3.csv");
 
             horizontalLine1.BackColor = Color.Black;
             horizontalLine1.Size = new Size(362, 2);
