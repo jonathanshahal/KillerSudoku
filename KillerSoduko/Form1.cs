@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// Stam
 namespace KillerSoduko
 {
     public partial class Form1 : Form
@@ -21,7 +22,7 @@ namespace KillerSoduko
            InitializeComponent();
            this.gameboard = new Board();
         
-            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game3.csv");
+            this.gameboard.LoadGame("C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv");
 
             horizontalLine1.BackColor = Color.Black;
             horizontalLine1.Size = new Size(362, 2);
