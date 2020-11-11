@@ -11,9 +11,8 @@ namespace KillerSoduko
     class Board
     {
         public Cell[,] cells;
-        public Group[] groups; 
+        public Group[] groups; //v Todo change to List
 
-        //Creates board
         public Board ()
         {
            this.groups = null;//new Group[81];
@@ -29,17 +28,18 @@ namespace KillerSoduko
             }
         }
 
-        // recieves a name of a csv file 
-        // puts the data of groups in the array of groups 
-        // puts the data of cells in the array of cells
+        //function that recieves a name of a csv file and puts the data of groups in the array of groups and the data of cells in the array of cells
         public bool LoadGame(String filename)
         {
-            // loads the logic from a csv file
+            // load the logic of the constrains from a csv file
             bool inCells = false;
             bool inGroups = true;
             
-           // creates a reader that reades the csv file
-            using (var reader = new StreamReader(filename))
+            /*if (!File.Exists(filename))
+            {   
+                MessageBox.Show(filename + " Does not exists.\nQuitting.");
+            }*/
+            using(var reader = new StreamReader(filename))
             {
                 while (!reader.EndOfStream)
                 {  
@@ -47,7 +47,7 @@ namespace KillerSoduko
 
                     if (line.StartsWith("#"))
                     {
-                        // Handle comments (lines starting with #), if "Group" is found, switch to read cells.
+                        // Handle comments (lines starting with #), if "Group" is found, switch to read groups.
                         if (line.IndexOf("Cells", 0) != -1) 
                         {
                             inCells = true;
@@ -92,8 +92,103 @@ namespace KillerSoduko
       }
 
           
-      
+        public bool solveBoard (int row = 0, int col = 0)
+        {        
+            int a=1;
+            while (a <= 9)
+            {
+                this.cells [row, col].setValue(a);
+                if (this.isValid(row, col, a))
+                {
+                    if (row == 8 && col == 8)
+                        return true;
+                    else
+                    {
+                        Tuple<int, int> nextCell = this.nextCell(row, col);
 
-      
+                        bool rv = solveBoard (nextCell.Item1, nextCell.Item2);
+                        if (rv == false)
+                        {
+                            this.cells[nextCell.Item1, nextCell.Item2].setValue(0) ;
+                            if (a==9)
+                                return false;
+                        }
+                        else
+                            return true;
+                    }
+                }
+                
+                a++;
+             }
+
+             return false;
+        }
+
+        
+        public bool isValid (int row, int col, int val)
+        {
+            //row constraint
+            for (int col_index=0; col_index<9; col_index++)
+            {
+                if ((col_index != col) && (this.cells[row,col_index].getValue() == val))
+                    return false;
+            }
+                    
+            
+            //col constraint
+            for (int row_index =0; row_index<9; row_index++)
+            {
+                if ((row_index != row) && (this.cells[row_index,col].getValue() == val))
+                    return false;
+            }
+
+            // sub square constraint
+            for (int row_index =0; row_index<9; row_index++)
+            {
+                if (row / 3 == row_index / 3)
+                {
+                    for (int col_index=0; col_index<9; col_index++)
+                    {
+                        if (col / 3 == col_index / 3)
+                        {
+                            if ((row_index != row) && (col_index != col) && (this.cells[row_index,col_index].getValue() == val))
+                                return false;
+                        }
+                    }
+                }
+            }
+
+            
+            //group constraint
+            Group group = this.cells[row,col].getGroup();
+            int groupSum = group.getgroupSum();
+            int aggregatedSum = 0;
+            bool doAllCellsHaveValues = true;
+            foreach(Cell c in group.getcellList())
+            {
+                int cellValue = c.getValue();
+                aggregatedSum += cellValue;
+                if (aggregatedSum > groupSum)
+                    return false;
+                if (cellValue == 0)
+                    doAllCellsHaveValues = false; 
+            }
+
+            if (doAllCellsHaveValues && (aggregatedSum < groupSum))
+                return false;
+
+           
+
+            return true;
+        }
+        
+        
+        public Tuple<int, int> nextCell (int row, int col)
+        {
+            if (col==8)
+                return Tuple.Create(row+1, 0);
+            else
+                return Tuple.Create(row,col+1);
+        }  
     }
 }
