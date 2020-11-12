@@ -1,19 +1,19 @@
-# Groups (index,color,sum) - BEGIN
-27,Cyan,8
-26,Orange,19
-25,Orange,16
-24,White,4
-23,White,15
+﻿# Groups (index,color,sum) - BEGIN
+27,Orange,8
+26,White,19
+25,Cyan,16
+24,Purple,4
+23,Orange,15
 22,White,22
-21,Purple,10
+21,Orange,10
 20,Cyan,7
-19,Cyan,31
+19,Purple,31
 18,Purple,35
 17,Cyan,6
 16,Purple,8
 15,White,8
-14,Orange,15
-13,White,13
+14,Cyan,15
+13,Orange,13
 12,White,14
 11,Orange,30
 10,Purple,9

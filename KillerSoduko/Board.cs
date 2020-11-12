@@ -80,7 +80,7 @@ namespace KillerSoduko
                             int groupSum = int.Parse(values[2]);
                             if (this.groups == null)
                             {
-                                this.groups = new Group [groupIndex + 1];
+                                this.groups = new Group [groupIndex + 1]; //ArrayList of group's size = first groupindex + 1
                             }
                             this.groups[groupIndex] = new Group(groupSum, backColor, groupIndex);
                             

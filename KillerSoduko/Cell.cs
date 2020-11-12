@@ -9,18 +9,18 @@ namespace KillerSoduko
 	{
 		private int row;
 		private int col;
-		private int square;
-		private Group group;
-		private int value;
+		private int square; //square that the cell is in
+		private Group group; //group that the cell is in
+		private int value; //value of cell
 
 		public Cell(int row, int col)
 		{
 			this.row = row;
 			this.col = col;
-			this.square = 3 * (int)(row / 3) + (int)(col / 3);
-			this.group = null;
-			this.value = 0;
-		}
+			this.square = 3 *(row / 3) + (col / 3); 
+			this.group = null; 
+			this.value = 0; 
+		} 
 
 		public void setGroup(Group grp)
         {
@@ -42,15 +42,17 @@ namespace KillerSoduko
 			return this.col;
 		}
 
+		public void setValue(int a)
+        {
+			this.value = a;
+        }
+		
 		public int getValue()
 		{
 			return this.value;
 		}
 
-		public void setValue(int a)
-        {
-			this.value = a;
-        }
+		
 
 	}
 }
