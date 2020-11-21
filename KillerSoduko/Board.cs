@@ -32,6 +32,11 @@ namespace KillerSoduko
         public bool LoadGame(String filename)
         {
             // load the logic of the constrains from a csv file
+            if (this.groups != null)
+            {
+                Array.Clear(this.groups, 0, this.groups.Length);
+                this.groups = null;
+            }
             bool inCells = false;
             bool inGroups = true;
             
@@ -64,11 +69,11 @@ namespace KillerSoduko
                             int row = int.Parse(values[0]);
                             int col = int.Parse(values[1]);
                             int int_group = int.Parse(values[2]);
-                            Group group = this.groups[int_group];
 
                             // cell contains its group
-                            this.cells[row, col].setGroup(group);
+                            this.cells[row, col].setGroup(int_group);
 
+                            Group group = this.groups[int_group];
                             group.addCell(this.cells[row, col]);
                         }
 
@@ -82,17 +87,16 @@ namespace KillerSoduko
                             {
                                 this.groups = new Group [groupIndex + 1];
                             }
-                            this.groups[groupIndex] = new Group(groupSum, backColor, groupIndex);
-                            
+                            this.groups[groupIndex] = new Group(groupSum, backColor, groupIndex);      
                         }
                     }
                 }
             }
             return true;
-      }
-
+      
+         }
           
-        public bool solveBoard (int row = 0, int col = 0)
+           public bool solveBoard (int row = 0, int col = 0)
         {        
             int a=1;
             while (a <= 9)
@@ -158,9 +162,9 @@ namespace KillerSoduko
                 }
             }
 
-            
             //group constraint
-            Group group = this.cells[row,col].getGroup();
+            int groupId = this.cells[row,col].getGroup();
+            Group group = this.groups[groupId];
             int groupSum = group.getgroupSum();
             int aggregatedSum = 0;
             bool doAllCellsHaveValues = true;
@@ -189,6 +193,8 @@ namespace KillerSoduko
                 return Tuple.Create(row+1, 0);
             else
                 return Tuple.Create(row,col+1);
-        }  
+        } 
+    
+           
+        }
     }
-}

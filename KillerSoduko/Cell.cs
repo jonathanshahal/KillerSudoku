@@ -10,7 +10,7 @@ namespace KillerSoduko
 		private int row;
 		private int col;
 		private int square;
-		private Group group;
+		private int groupId; //change to groupId
 		private int value;
 
 		public Cell(int row, int col)
@@ -18,18 +18,18 @@ namespace KillerSoduko
 			this.row = row;
 			this.col = col;
 			this.square = 3 * (int)(row / 3) + (int)(col / 3);
-			this.group = null;
+			this.groupId = 0;
 			this.value = 0;
 		}
 
-		public void setGroup(Group grp)
+		public void setGroup(int groupId)
         {
-			this.group = grp;
+			this.groupId = groupId;
         }
 
-		public Group getGroup ()
+		public int getGroup ()
         {
-			return this.group;
+			return this.groupId;
         }
 
 		public int getRow()
@@ -51,6 +51,5 @@ namespace KillerSoduko
         {
 			this.value = a;
         }
-
 	}
 }
