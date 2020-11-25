@@ -11,11 +11,11 @@ namespace KillerSoduko
     class Board
     {
         public Cell[,] cells;
-        public Group[] groups; //v Todo change to List
+        public Group[] groups; //v Todo change to List?
 
         public Board ()
         {
-           this.groups = null;//new Group[81];
+           this.groups = null;
             
            // Create 2-dim array of cells, each has row, col and square.
            this.cells = new Cell[9,9];
@@ -31,12 +31,14 @@ namespace KillerSoduko
         //function that recieves a name of a csv file and puts the data of groups in the array of groups and the data of cells in the array of cells
         public bool LoadGame(String filename)
         {
-            // load the logic of the constrains from a csv file
+            // Clear groups in case we already loaded a game.
             if (this.groups != null)
             {
                 Array.Clear(this.groups, 0, this.groups.Length);
                 this.groups = null;
             }
+
+            // load the logic of the constrains from a csv file
             bool inCells = false;
             bool inGroups = true;
             
@@ -52,7 +54,7 @@ namespace KillerSoduko
 
                     if (line.StartsWith("#"))
                     {
-                        // Handle comments (lines starting with #), if "Group" is found, switch to read groups.
+                        // Handle comments (lines starting with #), if "Cells" is found, switch to read cells.
                         if (line.IndexOf("Cells", 0) != -1) 
                         {
                             inCells = true;
@@ -98,10 +100,10 @@ namespace KillerSoduko
           
            public bool solveBoard (int row = 0, int col = 0)
         {        
-            int a=1;
+            int a = 1;
             while (a <= 9)
             {
-                this.cells [row, col].setValue(a);
+                this.cells[row, col].setValue(a);
                 if (this.isValid(row, col, a))
                 {
                     if (row == 8 && col == 8)
@@ -114,7 +116,7 @@ namespace KillerSoduko
                         if (rv == false)
                         {
                             this.cells[nextCell.Item1, nextCell.Item2].setValue(0) ;
-                            if (a==9)
+                            if (a == 9)
                                 return false;
                         }
                         else

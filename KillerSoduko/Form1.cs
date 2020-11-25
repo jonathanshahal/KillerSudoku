@@ -79,11 +79,12 @@ namespace KillerSoduko
             MyCheckBox3.Location = new Point (600,120);
             MyCheckBox3.Checked = (activeBoard == game4); // Calls LoadForm!
 
-            this.DrawCells();   
+            this.DrawCells(true);   
         }
 
-        private void DrawCells()
+        private void DrawCells(bool ForceNewCells = false)
         {
+            bool firstTime = ForceNewCells;
             int startPos = 30;
             int gap = 2;
             
@@ -91,8 +92,17 @@ namespace KillerSoduko
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    var btn = new Button();
-                    buttonArray[row, col] = btn;
+                    
+                    if (buttonArray[row, col] == null)
+                    {
+                        buttonArray[row, col]  = new Button();
+                        firstTime = true;
+                    }
+                    
+                    var btn =  buttonArray[row, col];
+                    btn.Text = "";                    
+                    btn.Image = null;
+
                     btn.Size = new Size(40, 40);
                     int groupId = this.gameboard.cells[row,col].getGroup();
                     btn.BackColor = this.gameboard.groups[groupId].getbackColor();
@@ -108,8 +118,9 @@ namespace KillerSoduko
                         btn.Text = this.gameboard.groups[groupId].getgroupSum().ToString();
                         btn.TextAlign = ContentAlignment.TopLeft;
                     }
-                    this.Controls.Add(btn);
                     
+                    if (firstTime)
+                        this.Controls.Add(btn);
                 }
             }
             
@@ -120,6 +131,28 @@ namespace KillerSoduko
         }
 
 
+        private void DrawValueSumButton(Button button, int sum, int value)
+        {
+            button.Text = "";
+            Bitmap bmp = new Bitmap(button.ClientRectangle.Width, button.ClientRectangle.Height);
+            Graphics G = Graphics.FromImage(bmp);
+            G.Clear(button.BackColor);
+
+            StringFormat SF = new StringFormat();
+            SF.Alignment = StringAlignment.Center;
+            SF.LineAlignment = StringAlignment.Center;
+
+            // Draw sum
+            Font font6 = new Font(button.Font.FontFamily, 6);
+            G.DrawString(sum.ToString(), font6, Brushes.Black, 10, 10, SF);
+
+            // Draw value
+            Font font10 = new Font(button.Font.FontFamily, 10);
+            G.DrawString(value.ToString(), font10, Brushes.Black, 20, 20, SF);
+            
+            button.Image = bmp;
+            button.ImageAlign = ContentAlignment.MiddleCenter;
+        }
 
 
         
@@ -131,10 +164,19 @@ namespace KillerSoduko
                  {
                     for (int col = 0; col < 9; col++)
                     {
-                        buttonArray[row,col].Text =  this.gameboard.cells[row,col].getValue().ToString();
-                        int newSize = 10;
-                        buttonArray[row,col].Font = new Font(buttonArray[row,col].Font.FontFamily, newSize);
-                        buttonArray[row,col].TextAlign = ContentAlignment.MiddleCenter;
+                        int groupId = this.gameboard.cells[row,col].getGroup();
+                        if (this.gameboard.groups[groupId].getcellSum() == this.gameboard.cells[row,col])
+                        {
+                            int sellSum = this.gameboard.groups[groupId].getgroupSum(); 
+                            this.DrawValueSumButton(buttonArray[row,col], sellSum, this.gameboard.cells[row,col].getValue());
+                        }
+                        else
+                        {
+                            buttonArray[row,col].Text =  this.gameboard.cells[row,col].getValue().ToString();
+                            int newSize = 10;
+                            buttonArray[row,col].Font = new Font(buttonArray[row,col].Font.FontFamily, newSize);
+                            buttonArray[row,col].TextAlign = ContentAlignment.MiddleCenter;
+                        }
                     }
                  }  
             }
@@ -151,20 +193,11 @@ namespace KillerSoduko
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    this.gameboard.cells [row,col].setValue (0);
-                        
-                    Button btn = buttonArray[row, col];
-                    btn.Text = "";
-                    int groupId = this.gameboard.cells[row,col].getGroup();
-                    if (this.gameboard.groups[groupId].getcellSum() == this.gameboard.cells[row,col])
-                    {
-                        int newSize = 6;
-                        btn.Font = new Font(btn.Font.FontFamily, newSize);
-                        btn.Text =this.gameboard.groups[groupId].getgroupSum().ToString();
-                        btn.TextAlign = ContentAlignment.TopLeft;
-                    }
+                    this.gameboard.cells [row,col].setValue(0);
                 }
             }
+
+            this.DrawCells();
         }
 
         private void CheckBox1_CheckedChanged(Object sender, EventArgs e)

@@ -10,7 +10,7 @@ namespace KillerSoduko
 		private int row;
 		private int col;
 		private int square;
-		private int groupId; //change to groupId
+		private int groupId; 
 		private int value;
 
 		public Cell(int row, int col)
