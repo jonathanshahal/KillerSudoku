@@ -12,10 +12,12 @@ namespace KillerSoduko
     {
         public Cell[,] cells;
         public Group[] groups; //v Todo change to List?
+        public Button btnInFocus;
 
         public Board ()
         {
            this.groups = null;
+            this.btnInFocus = null;
             
            // Create 2-dim array of cells, each has row, col and square.
            this.cells = new Cell[9,9];
@@ -26,6 +28,7 @@ namespace KillerSoduko
                     cells[row, col] = new Cell(row, col);  
                 }
             }
+       
         }
 
         //function that recieves a name of a csv file and puts the data of groups in the array of groups and the data of cells in the array of cells
@@ -100,6 +103,7 @@ namespace KillerSoduko
           
            public bool solveBoard (int row = 0, int col = 0)
         {        
+            
             int a = 1;
             while (a <= 9)
             {
@@ -196,7 +200,7 @@ namespace KillerSoduko
             else
                 return Tuple.Create(row,col+1);
         } 
-    
            
-        }
+        
     }
+}

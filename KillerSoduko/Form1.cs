@@ -18,20 +18,24 @@ namespace KillerSoduko
         String game3 = "C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game3.csv";
         String game4 = "C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game4.csv";
         String activeBoard;
+      
 
         public Form1()
         {
             this.activeBoard = game2;
             this.LoadForm();
+            
+
         }
 
 
         public void LoadForm()
         {
             InitializeComponent();
+            
+            
             this.gameboard = new Board();  
             this.gameboard.LoadGame(activeBoard);
-
             horizontalLine1.BackColor = Color.Black;
             horizontalLine1.Size = new Size(362, 2);
             horizontalLine1.Location = new Point(31, 29);
@@ -79,7 +83,11 @@ namespace KillerSoduko
             MyCheckBox3.Location = new Point (600,120);
             MyCheckBox3.Checked = (activeBoard == game4); // Calls LoadForm!
 
-            this.DrawCells(true);   
+            TextBox1.Location = new Point (555, 350);
+
+
+
+            this.DrawCells(true);  
         }
 
         private void DrawCells(bool ForceNewCells = false)
@@ -109,6 +117,7 @@ namespace KillerSoduko
                     int x = startPos + (40 * col + gap * (col / 3));
                     int y = startPos + (40 * row) + gap * (row / 3);
                     btn.Location = new Point(x, y);
+               
 
                     // Dispaly group sum if needed
                     if (this.gameboard.groups[groupId].getcellSum() == this.gameboard.cells[row,col])
@@ -121,6 +130,9 @@ namespace KillerSoduko
                     
                     if (firstTime)
                         this.Controls.Add(btn);
+
+                    btn.Click += addTexttoButton;
+                  
                 }
             }
             
@@ -184,6 +196,8 @@ namespace KillerSoduko
             {
                 MessageBox.Show("Not Solvable");
             }
+
+            
                
         }
 
@@ -198,6 +212,14 @@ namespace KillerSoduko
             }
 
             this.DrawCells();
+        }
+
+      
+        private void button3_Click(object sender, EventArgs e)
+        {
+             
+            
+            
         }
 
         private void CheckBox1_CheckedChanged(Object sender, EventArgs e)
@@ -232,6 +254,31 @@ namespace KillerSoduko
                 this.LoadForm();
             }
         }
+
+        
+
+
+        private void addTexttoButton(object sender, EventArgs e)
+        {
+            /*
+            // your implementation
+            
+            if (btn != null)
+            {
+                btn.Text = TextBox1.Text;
+                
+            }*/
+
+            Button btn = sender as Button;
+            this.gameboard.btnInFocus = btn;
+            
+
+              
+        }
+
+
+
+
     }
 }
 
