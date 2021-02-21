@@ -11,7 +11,7 @@ namespace KillerSoduko
     class Board
     {
         public Cell[,] cells;
-        public Group[] groups; //v Todo change to List?
+        public Group[] groups; 
         public Button btnInFocus;
 
         public Board ()
