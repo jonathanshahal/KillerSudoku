@@ -9,6 +9,7 @@ using System.Windows.Forms;
 namespace KillerSoduko
 {
 
+
     class Board
     {
         public Cell[,] cells;
