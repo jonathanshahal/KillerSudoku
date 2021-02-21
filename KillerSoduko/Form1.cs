@@ -8,24 +8,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace KillerSoduko
 {
     public partial class Form1 : Form
     {
         Button[,] buttonArray = new Button[9,9];
         Board gameboard;
+        Board solvedGameboard;
         String game2 = "C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game2.csv";
         String game3 = "C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game3.csv";
         String game4 = "C:\\Users\\jonat\\source\\repos\\KillerSudoku\\Game4.csv";
         String activeBoard;
-      
-
+ 
         public Form1()
         {
-            this.activeBoard = game2;
-            this.LoadForm();
-            
+            // Set KeyPreview object to true to allow the form to process 
+            // the key before the control with focus processes it.
+            this.KeyPreview = true;
 
+            this.activeBoard = game2;
+            
+            // Associate the event-handling method with the KeyDown event.
+            this.KeyDown += new KeyEventHandler(Form1_KeyDown);
+            this.LoadForm();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            int keyValue = e.KeyValue-48;
+            if ((this.gameboard.btnInFocus != null) && 
+                ((keyValue>=1 && keyValue <=9) || (keyValue == -40)))
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    for (int col = 0; col < 9; col++)
+                    {
+                         if (buttonArray[row, col] == this.gameboard.btnInFocus)
+                         {
+                            int valueToSet = (keyValue == -40) ? 0 : keyValue;
+                            this.gameboard.cells[row,col].setValue(valueToSet);
+                            AddValueToCell(row, col);
+                         }
+                    }
+                }
+            }
+
+            e.Handled = false;
         }
 
 
@@ -34,11 +63,13 @@ namespace KillerSoduko
             InitializeComponent();
             
             
-            this.gameboard = new Board();  
+            this.gameboard = new Board(); 
+            this.solvedGameboard = new Board();
             this.gameboard.LoadGame(activeBoard);
+            this.solvedGameboard.LoadGame(activeBoard);
             horizontalLine1.BackColor = Color.Black;
-            horizontalLine1.Size = new Size(362, 2);
-            horizontalLine1.Location = new Point(31, 29);
+            horizontalLine1.Size = new Size(363, 2);
+            horizontalLine1.Location = new Point(30, 29);
             
             horizontalLine2.BackColor = Color.Black;
             horizontalLine2.Size = new Size(362, 2);
@@ -49,13 +80,13 @@ namespace KillerSoduko
             horizontalLine3.Location = new Point(31, 272);
 
             horizontalLine4.BackColor = Color.Black;
-            horizontalLine4.Size = new Size(362, 2);
-            horizontalLine4.Location = new Point(31, 393);
+            horizontalLine4.Size = new Size(363, 2);
+            horizontalLine4.Location = new Point(30, 393);
 
 
             verticalLine1.BackColor = Color.Black;
             verticalLine1.Size = new Size(2, 362);
-            verticalLine1.Location = new Point(31, 31);
+            verticalLine1.Location = new Point(30, 31);
 
             verticalLine2.BackColor = Color.Black;
             verticalLine2.Size = new Size(2, 362);
@@ -83,10 +114,7 @@ namespace KillerSoduko
             MyCheckBox3.Location = new Point (600,120);
             MyCheckBox3.Checked = (activeBoard == game4); // Calls LoadForm!
 
-            TextBox1.Location = new Point (555, 350);
-
-
-
+            
             this.DrawCells(true);  
         }
 
@@ -131,7 +159,7 @@ namespace KillerSoduko
                     if (firstTime)
                         this.Controls.Add(btn);
 
-                    btn.Click += addTexttoButton;
+                    btn.Click += setButtonInFocus;
                   
                 }
             }
@@ -160,10 +188,12 @@ namespace KillerSoduko
 
             // Draw value
             Font font10 = new Font(button.Font.FontFamily, 10);
-            G.DrawString(value.ToString(), font10, Brushes.Black, 20, 20, SF);
+            string strValue = (value == 0)? "" : value.ToString(); 
+            G.DrawString(strValue, font10, Brushes.Black, 20, 20, SF);
             
             button.Image = bmp;
             button.ImageAlign = ContentAlignment.MiddleCenter;
+
         }
 
 
@@ -176,19 +206,7 @@ namespace KillerSoduko
                  {
                     for (int col = 0; col < 9; col++)
                     {
-                        int groupId = this.gameboard.cells[row,col].getGroup();
-                        if (this.gameboard.groups[groupId].getcellSum() == this.gameboard.cells[row,col])
-                        {
-                            int sellSum = this.gameboard.groups[groupId].getgroupSum(); 
-                            this.DrawValueSumButton(buttonArray[row,col], sellSum, this.gameboard.cells[row,col].getValue());
-                        }
-                        else
-                        {
-                            buttonArray[row,col].Text =  this.gameboard.cells[row,col].getValue().ToString();
-                            int newSize = 10;
-                            buttonArray[row,col].Font = new Font(buttonArray[row,col].Font.FontFamily, newSize);
-                            buttonArray[row,col].TextAlign = ContentAlignment.MiddleCenter;
-                        }
+                        AddValueToCell(row, col);
                     }
                  }  
             }
@@ -196,9 +214,27 @@ namespace KillerSoduko
             {
                 MessageBox.Show("Not Solvable");
             }
+        }
 
-            
-               
+        private void AddValueToCell(int row, int col)
+        {
+            int groupId = this.gameboard.cells[row,col].getGroup();
+            if (this.gameboard.groups[groupId].getcellSum() == this.gameboard.cells[row,col])
+            {
+                // cell with sum
+                int sellSum = this.gameboard.groups[groupId].getgroupSum(); 
+                this.DrawValueSumButton(buttonArray[row,col], sellSum, this.gameboard.cells[row,col].getValue());
+            }
+            else
+            {
+                // cell without sum
+                int value = this.gameboard.cells[row,col].getValue();
+                string strValue = (value == 0)? "" : value.ToString();
+                buttonArray[row,col].Text =  strValue;
+                int newSize = 10;
+                buttonArray[row,col].Font = new Font(buttonArray[row,col].Font.FontFamily, newSize);
+                buttonArray[row,col].TextAlign = ContentAlignment.MiddleCenter;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -217,9 +253,37 @@ namespace KillerSoduko
       
         private void button3_Click(object sender, EventArgs e)
         {
-             
-            
-            
+            bool isRight = true;
+            if (this.solvedGameboard.solveBoard())
+            {
+                 for (int row = 0; row < 9; row++)
+                 {
+                    for (int col = 0; col < 9; col++)
+                    {
+                        AddValueToCell(row, col);
+                    }
+                 }  
+            }
+
+                 for (int row = 0; row < 9; row++)
+                 {
+                    for (int col = 0; col < 9; col++)
+                    {
+                       if (this.gameboard.cells [row, col].getValue() != this.solvedGameboard.cells [row, col].getValue())
+                       isRight = false;
+                    }
+                 }  
+                    
+                if (isRight == true)               
+                {
+                    MessageBox.Show ("True");
+                    
+                }   
+                 
+                else
+                {
+                   MessageBox.Show ("Wrong");
+                }
         }
 
         private void CheckBox1_CheckedChanged(Object sender, EventArgs e)
@@ -255,30 +319,13 @@ namespace KillerSoduko
             }
         }
 
-        
-
-
-        private void addTexttoButton(object sender, EventArgs e)
-        {
-            /*
-            // your implementation
-            
+         private void setButtonInFocus(object sender, EventArgs e)
+         {
+            Button btn = sender as Button;
             if (btn != null)
             {
-                btn.Text = TextBox1.Text;
-                
-            }*/
-
-            Button btn = sender as Button;
-            this.gameboard.btnInFocus = btn;
-            
-
-              
-        }
-
-
-
-
+                this.gameboard.btnInFocus = btn;
+            }
+         }
     }
 }
-
